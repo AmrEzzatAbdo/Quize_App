@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.quiz.amrezzat.quizt.Admin">
+    <RelativeLayout
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:background="#b76d6d"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/CurrentUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:text="Current User"/>
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:onClick="logout"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="logout"/>
+    </RelativeLayout>
+    <RadioGroup
+        android:id="@+id/admChoice"
+        android:layout_below="@id/actionBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="Post" />
+
+        <RadioButton
+            android:id="@+id/addUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add new User" />
+    </RadioGroup>
+    <View
+        android:id="@+id/lineG"
+        android:layout_below="@id/admChoice"
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#e4e3e3"
+        android:layout_height="1dp"/>
+    <!--for Post-->
+    <RelativeLayout
+        android:id="@+id/admPost"
+        android:background="@drawable/rect"
+        android:layout_below="@id/lineG"
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/quition"
+            android:layout_width="wrap_content"
+            android:maxWidth="350dp"
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
+            android:hint="Quition 1"/>
+
+        <EditText
+            android:id="@+id/choice1"
+            android:layout_below="@id/quition"
+            android:layout_width="wrap_content"
+            android:maxWidth="300dp"
+            android:textSize="16dp"
+            android:layout_height="wrap_content"
+            android:hint="choice 1"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/choice2"
+            android:layout_below="@id/choice1"
+            android:layout_width="wrap_content"
+            android:maxWidth="300dp"
+            android:layout_height="wrap_content"
+            android:hint="choice 1"
+            android:textSize="16dp"
+            android:layout_marginLeft="10dp"/>
+        <EditText
+            android:id="@+id/trueChoice"
+            android:layout_below="@id/choice2"
+            android:layout_width="wrap_content"
+            android:maxWidth="300dp"
+            android:layout_height="wrap_content"
+            android:hint="choice 1"
+            android:textSize="16dp"
+            android:layout_marginLeft="10dp"/>
+        <Button
+            android:id="@+id/subPost"
+            android:layout_below="@id/choice2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Post"
+            android:layout_alignParentRight="true"
+            android:onClick="subPost"/>
+    </RelativeLayout>
+
+
+    <!--for add user-->
+    <RelativeLayout
+        android:id="@+id/admUser"
+        android:background="@drawable/rect"
+        android:layout_below="@id/lineG"
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:maxWidth="350dp"
+            android:layout_marginLeft="5dp"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
+            android:layout_height="wrap_content"
+            android:hint="UserName"/>
+
+        <EditText
+            android:id="@+id/Email"
+            android:layout_below="@id/userName"
+            android:layout_width="wrap_content"
+            android:maxWidth="300dp"
+            android:textSize="16dp"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_below="@id/Email"
+            android:layout_width="wrap_content"
+            android:maxWidth="300dp"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="password"
+            android:textSize="16dp"
+            android:layout_marginLeft="10dp"/>
+        <Button
+            android:id="@+id/subUser"
+            android:layout_below="@id/password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="submit"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:onClick="subUser"/>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_marginTop="292dp"
+        android:layout_marginBottom="5dp"
+        android:background="#e4e3e3"
+        android:layout_height="1dp"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/line"
+        android:id="@+id/adminRecycel"
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

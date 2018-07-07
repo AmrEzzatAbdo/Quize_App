@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.quiz.amrezzat.quizt.dashboard">
+    <RelativeLayout
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:background="#b76d6d"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/CurrentUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:textSize="17dp"
+            android:text="Current User"/>
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:onClick="logoutU"
+            android:layout_marginRight="10dp"
+            android:textSize="17dp"
+            android:layout_centerVertical="true"
+            android:text="logout"/>
+        <TextView
+            android:id="@+id/Urate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="16dp"
+            android:onClick="uRate"
+            android:text="Rates"/>
+    </RelativeLayout>
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/DBposts"
+    android:layout_below="@id/actionBar"
+    android:layout_width="match_parent"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content"/>
+
+</RelativeLayout>
