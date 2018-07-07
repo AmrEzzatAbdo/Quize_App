@@ -66,8 +66,10 @@ public class LoginActivity extends AppCompatActivity {
         if (!readeFile().isEmpty()) {
             if (readeFile().equals("adminXQ")) {
                 startActivity(new Intent(LoginActivity.this, Admin.class));
+                finish();
             } else {
                 startActivity(new Intent(LoginActivity.this, dashboard.class));
+                finish();
             }
         }
         //firebase

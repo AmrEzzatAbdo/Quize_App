@@ -50,7 +50,7 @@ public class dashboard extends AppCompatActivity {
     static Date QuestionDate, currentDate;
     static Boolean true_falseBtn = true;
     static String CQuition;
-
+    static Button submit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,8 +113,8 @@ public class dashboard extends AppCompatActivity {
             mView = itemView;
             //selection
             final RadioGroup choices = (RadioGroup) mView.findViewById(R.id.choices);
-            final Button submit = (Button) mView.findViewById(R.id.submit);
-            //submit.setEnabled(true_falseBtn);
+            submit = (Button) mView.findViewById(R.id.submit);
+            submit.setEnabled(true_falseBtn);
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -213,8 +213,7 @@ public class dashboard extends AppCompatActivity {
             long hours = minutes / 60;
             long days = hours / 24;
             if (days == 0) {
-                if (hours >= 24) {
-                    true_falseBtn = false;
+                if (hours >= 24) { //in testing
                     //Update it into DB
                     mdatabase.child("Questions").child(CQuition)
                             .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -237,7 +236,6 @@ public class dashboard extends AppCompatActivity {
                 }
             }
             else if (days!=0){
-                true_falseBtn = false;
                 //Update it into DB
                 mdatabase.child("Questions").child(CQuition)
                         .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -262,6 +260,7 @@ public class dashboard extends AppCompatActivity {
 
         public void setBooleanQuestion(boolean booleanQuestion) {
             true_falseBtn = booleanQuestion;
+            submit.setEnabled(true_falseBtn);
         }
     }
 
