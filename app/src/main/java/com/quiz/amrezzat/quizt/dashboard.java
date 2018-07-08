@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.IdRes;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,6 +52,8 @@ public class dashboard extends AppCompatActivity {
     static Boolean true_falseBtn = true;
     static String CQuition;
     static Button submit;
+    static View viewPos;
+    static ArrayList<String> lastQuistion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,9 @@ public class dashboard extends AppCompatActivity {
         }
 
         GtrueChoice = new ArrayList<String>();
+        lastQuistion=new ArrayList<>();
+        //SNACKBAR
+        viewPos = findViewById(R.id.myCoordinatorLayout);
     }
 
     @Override
@@ -144,14 +150,28 @@ public class dashboard extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (GtrueChoice.get(0).toString().equals(radioButton.getText().toString())) {
-                                newRate = Integer.valueOf(CUserRate) + Integer.valueOf("1");
-                                submit.setEnabled(false);
+                                try {
+                                    newRate = Integer.valueOf(CUserRate) + Integer.valueOf("1");
+                                    submit.setEnabled(false);
+                                }catch (Exception e){
+                                    Snackbar.make(viewPos,"please logout and sign in again", Snackbar.LENGTH_LONG)
+                                            .show();
+                                }
                                 //change boolean in quietion DB for selected quition and set it in view holder
                             } else {
-                                newRate = Integer.valueOf(CUserRate);
-                                submit.setEnabled(false);
+                                try {
+                                    newRate = Integer.valueOf(CUserRate);
+                                    submit.setEnabled(false);
+                                }catch (Exception e){
+                                    Snackbar.make(viewPos,"please logout and sign in again", Snackbar.LENGTH_LONG)
+                                            .show();
+                                }
+                             
                                 //change boolean in quietion DB for selected quition and set it in view holder
                             }
+
+                            //insert quition id in true answer and check true anser if has quition id or not
+
                         }
 
                         @Override
@@ -171,6 +191,8 @@ public class dashboard extends AppCompatActivity {
                                                                     }
                                                                     postValues.put("rate", String.valueOf(newRate));
                                                                     mUserDatabase.child(currentUser).updateChildren(postValues);
+                              //update this with quition id         //insert quition choice two
+                                                                    mUserDatabase.child(currentUser).child("quitionsId").child("quitionId").setValue(lastQuistion);
 
                                                                 }
 
@@ -190,6 +212,21 @@ public class dashboard extends AppCompatActivity {
             CQuition = quition;
             TextView Qtext = (TextView) mView.findViewById(R.id.UDquition);
             Qtext.setText(quition);
+            lastQuistion.add(quition);
+            //check for contain user quition
+            mUserDatabase.child("users").child(currentUser).child("quitionsId").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child(lastQuistion.get(0)).exists()){
+                        true_falseBtn=false;
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
 
         public void setChoice1(String choice1) {
