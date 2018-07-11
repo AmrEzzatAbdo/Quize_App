@@ -94,7 +94,7 @@ public class Admin extends AppCompatActivity {
     }
 
     public void subUser(View view) {
-        final User user = new User(userName.getText().toString(), password.getText().toString(), Email.getText().toString(), "0");
+        final User user = new User(userName.getText().toString(), password.getText().toString(), Email.getText().toString(), "0","test");
         useres.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -82,44 +82,54 @@ public class LoginActivity extends AppCompatActivity {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Read from the database
-                useres.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-                        if (dataSnapshot.child(mEmailView.getText().toString()).exists()) {
-                            if (!mEmailView.getText().toString().isEmpty()) {
-                                User login = dataSnapshot.child(mEmailView.getText().toString()).getValue(User.class);
-                                if (login.getPassword().equals(mPasswordView.getText().toString())) {
-                                    //login Ok
-                                    saveInFile(mEmailView.getText().toString());
-                                    if (mEmailView.getText().toString().equals("adminXQ")) {
-                                        startActivity(new Intent(LoginActivity.this, Admin.class));
-                                        finish();
+                //for local admin
+                if (mEmailView.getText().toString().equals("adminXQ")) {
+                    if (mPasswordView.getText().toString().equals("123")) {
+                        startActivity(new Intent(LoginActivity.this, Admin.class));
+                        finish();
+                    }else {
+                        Toast.makeText(LoginActivity.this, "Invalid Password", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // Read from the database
+                    useres.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
+                            if (dataSnapshot.child(mEmailView.getText().toString()).exists()) {
+                                if (!mEmailView.getText().toString().isEmpty()) {
+                                    User login = dataSnapshot.child(mEmailView.getText().toString()).getValue(User.class);
+                                    if (login.getPassword().equals(mPasswordView.getText().toString())) {
+                                        //login Ok
+                                        saveInFile(mEmailView.getText().toString());
+                                        if (mEmailView.getText().toString().equals("adminXQ")) {
+                                            startActivity(new Intent(LoginActivity.this, Admin.class));
+                                            finish();
+                                        } else {
+                                            startActivity(new Intent(LoginActivity.this, dashboard.class));
+                                            finish();
+                                        }
+                                        Toast.makeText(LoginActivity.this, "Login succeeded", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        startActivity(new Intent(LoginActivity.this, dashboard.class));
-                                        finish();
+                                        //wrong password
+                                        Toast.makeText(LoginActivity.this, "wrong password", Toast.LENGTH_SHORT).show();
                                     }
-                                    Toast.makeText(LoginActivity.this, "Login succeeded", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    //wrong password
-                                    Toast.makeText(LoginActivity.this, "wrong password", Toast.LENGTH_SHORT).show();
+                                    //user not exist
+                                    Toast.makeText(LoginActivity.this, "User not exist", Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
-                                //user not exist
-                                Toast.makeText(LoginActivity.this, "User not exist", Toast.LENGTH_SHORT).show();
+
                             }
-
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        Log.w("Login", "Failed to read value.", error.toException());
-                    }
-                });
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            Log.w("Login", "Failed to read value.", error.toException());
+                        }
+                    });
+                }
             }
         });
 

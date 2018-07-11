@@ -9,16 +9,18 @@ public class User {
     private String password;
     private String email;
     private String rate;
+    private String lquistion;
 
     public User() {
 
     }
 
-    public User(String userName, String password, String email,String rate) {
+    public User(String userName, String password, String email,String rate,String lquistion) {
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.rate=rate;
+        this.lquistion=lquistion;
     }
 
     public String getUserName() {

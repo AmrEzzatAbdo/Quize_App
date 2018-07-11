@@ -20,7 +20,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,11 +52,13 @@ public class dashboard extends AppCompatActivity {
     static User login;
     static ArrayList<String> GtrueChoice;
     static Date QuestionDate, currentDate;
-    static Boolean true_falseBtn = true;
+    static Boolean Qtrue_falseBtn = true, Strue_falseBtn = true;
     static String CQuition;
     static Button submit;
     static View viewPos;
     static ArrayList<String> lastQuistion;
+    static Firebase ref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,16 +80,20 @@ public class dashboard extends AppCompatActivity {
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Questions");
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         mdatabase.keepSynced(true);
+        //for check quition user answer
+        //Previous versions of Firebase
+        Firebase.setAndroidContext(this);
 
         //get Current user
         currentUser = readeFile();
         TcurrentUser = (TextView) findViewById(R.id.CurrentUser);
         if (!readeFile().isEmpty()) {
             TcurrentUser.setText(readeFile());
+            ref = new Firebase("https://quizt-c68f7.firebaseio.com/Users/" + readeFile() + "/lastQuistionSubmited");
         }
 
         GtrueChoice = new ArrayList<String>();
-        lastQuistion=new ArrayList<>();
+        lastQuistion = new ArrayList<>();
         //SNACKBAR
         viewPos = findViewById(R.id.myCoordinatorLayout);
     }
@@ -120,7 +129,7 @@ public class dashboard extends AppCompatActivity {
             //selection
             final RadioGroup choices = (RadioGroup) mView.findViewById(R.id.choices);
             submit = (Button) mView.findViewById(R.id.submit);
-            submit.setEnabled(true_falseBtn);
+            submit.setEnabled(false);
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -153,20 +162,20 @@ public class dashboard extends AppCompatActivity {
                                 try {
                                     newRate = Integer.valueOf(CUserRate) + Integer.valueOf("1");
                                     submit.setEnabled(false);
-                                }catch (Exception e){
-                                    Snackbar.make(viewPos,"please logout and sign in again", Snackbar.LENGTH_LONG)
+                                } catch (Exception e) {
+                                    Snackbar.make(viewPos, "please logout and sign in again", Snackbar.LENGTH_LONG)
                                             .show();
                                 }
                                 //change boolean in quietion DB for selected quition and set it in view holder
                             } else {
                                 try {
-                                    newRate = Integer.valueOf(CUserRate);
+                                    // newRate = Integer.valueOf(CUserRate);
                                     submit.setEnabled(false);
-                                }catch (Exception e){
-                                    Snackbar.make(viewPos,"please logout and sign in again", Snackbar.LENGTH_LONG)
+                                } catch (Exception e) {
+                                    Snackbar.make(viewPos, "please logout and sign in again", Snackbar.LENGTH_LONG)
                                             .show();
                                 }
-                             
+
                                 //change boolean in quietion DB for selected quition and set it in view holder
                             }
 
@@ -183,16 +192,33 @@ public class dashboard extends AppCompatActivity {
                     //Update User
                     mUserDatabase.child("users").child(currentUser)
                             .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                User uData;
+
                                                                 @Override
                                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                                     Map<String, Object> postValues = new HashMap<String, Object>();
                                                                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                                                         postValues.put(snapshot.getKey(), snapshot.getValue());
+                                                                        uData = snapshot.getValue(User.class);
                                                                     }
                                                                     postValues.put("rate", String.valueOf(newRate));
                                                                     mUserDatabase.child(currentUser).updateChildren(postValues);
-                              //update this with quition id         //insert quition choice two
-                                                                    mUserDatabase.child(currentUser).child("quitionsId").child("quitionId").setValue(lastQuistion);
+                                                                    //update this with quition id         //insert quition choice two
+                                                                    ref.addValueEventListener(new com.firebase.client.ValueEventListener() {
+                                                                        @Override
+                                                                        public void onDataChange(com.firebase.client.DataSnapshot dataSnapshot) {
+                                                                            for (int i = 0; i < lastQuistion.size(); i++) {
+                                                                                if (!dataSnapshot.child(lastQuistion.get(i)).exists()) {
+                                                                                    mUserDatabase.child(currentUser).child("lastQuistionSubmited").child(lastQuistion.get(i)).setValue(lastQuistion.get(i)); //lquistion
+                                                                                }
+                                                                            }
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onCancelled(FirebaseError firebaseError) {
+
+                                                                        }
+                                                                    });
 
                                                                 }
 
@@ -208,22 +234,24 @@ public class dashboard extends AppCompatActivity {
 
         }
 
-        public void setQuition(String quition) {
+
+        public void setQuition(final String quition) {
             CQuition = quition;
             TextView Qtext = (TextView) mView.findViewById(R.id.UDquition);
             Qtext.setText(quition);
             lastQuistion.add(quition);
             //check for contain user quition
-            mUserDatabase.child("users").child(currentUser).child("quitionsId").addValueEventListener(new ValueEventListener() {
+            ref.addValueEventListener(new com.firebase.client.ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child(lastQuistion.get(0)).exists()){
-                        true_falseBtn=false;
+                public void onDataChange(com.firebase.client.DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child(quition).exists()) {
+                        Strue_falseBtn = false;
+                        submit.setEnabled(Strue_falseBtn);
                     }
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(FirebaseError firebaseError) {
 
                 }
             });
@@ -248,31 +276,7 @@ public class dashboard extends AppCompatActivity {
             long seconds = diff / 1000;
             long minutes = seconds / 60;
             long hours = minutes / 60;
-            long days = hours / 24;
-            if (days == 0) {
-                if (hours >= 24) { //in testing
-                    //Update it into DB
-                    mdatabase.child("Questions").child(CQuition)
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                @Override
-                                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                    Map<String, Object> postValues = new HashMap<String, Object>();
-                                                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                                        postValues.put(snapshot.getKey(), snapshot.getValue());
-                                                                    }
-                                                                    postValues.put("booleanQuestion",false);
-                                                                    mdatabase.child(CQuition).updateChildren(postValues);
-                                                                }
-
-                                                                @Override
-                                                                public void onCancelled(DatabaseError databaseError) {
-                                                                    Log.e("DB ERROR", "onCancelled: ", databaseError.toException());
-                                                                }
-                                                            }
-                            );
-                }
-            }
-            else if (days!=0){
+            if (hours >= 24) { //in testing
                 //Update it into DB
                 mdatabase.child("Questions").child(CQuition)
                         .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -282,7 +286,7 @@ public class dashboard extends AppCompatActivity {
                                                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                                                     postValues.put(snapshot.getKey(), snapshot.getValue());
                                                                 }
-                                                                postValues.put("booleanQuestion",false);
+                                                                postValues.put("booleanQuestion", false);
                                                                 mdatabase.child(CQuition).updateChildren(postValues);
                                                             }
 
@@ -296,9 +300,14 @@ public class dashboard extends AppCompatActivity {
         }
 
         public void setBooleanQuestion(boolean booleanQuestion) {
-            true_falseBtn = booleanQuestion;
-            submit.setEnabled(true_falseBtn);
+            Qtrue_falseBtn = booleanQuestion;
+            if (!Strue_falseBtn == false) {
+                submit.setEnabled(booleanQuestion);
+            } else if (Strue_falseBtn == false) {
+                submit.setEnabled(false);
+            }
         }
+
     }
 
     public String readeFile() {
