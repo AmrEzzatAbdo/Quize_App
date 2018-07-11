@@ -52,7 +52,7 @@ public class dashboard extends AppCompatActivity {
     static User login;
     static ArrayList<String> GtrueChoice;
     static Date QuestionDate, currentDate;
-    static Boolean Qtrue_falseBtn = true, Strue_falseBtn = true;
+    static Boolean Qtrue_falseBtn = true, Strue_falseBtn = false;
     static String CQuition;
     static Button submit;
     static View viewPos;
@@ -107,6 +107,8 @@ public class dashboard extends AppCompatActivity {
                 viewHolder.setQuition(model.getQuition());
                 viewHolder.setChoice1(model.getChoice1());
                 viewHolder.setChoice2(model.getChoice2());
+                viewHolder.setChoice3(model.getChoice3());
+                viewHolder.setChoice4(model.getChoice4());
                 viewHolder.setTrueChoice(model.getTrueChoice());
                 viewHolder.setDate(model.getDate());
                 viewHolder.setBooleanQuestion(model.isBooleanQuestion());
@@ -129,7 +131,7 @@ public class dashboard extends AppCompatActivity {
             //selection
             final RadioGroup choices = (RadioGroup) mView.findViewById(R.id.choices);
             submit = (Button) mView.findViewById(R.id.submit);
-            submit.setEnabled(false);
+            submit.setEnabled(true);
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -248,6 +250,8 @@ public class dashboard extends AppCompatActivity {
                         Strue_falseBtn = false;
                         submit.setEnabled(Strue_falseBtn);
                     }
+                    else
+                        Strue_falseBtn=true;
                 }
 
                 @Override
@@ -265,6 +269,14 @@ public class dashboard extends AppCompatActivity {
         public void setChoice2(String choice2) {
             RadioButton Qchoice2 = (RadioButton) mView.findViewById(R.id.choice2);
             Qchoice2.setText(choice2);
+        }
+        public void setChoice3(String choice3) {
+            RadioButton Qchoice3 = (RadioButton) mView.findViewById(R.id.choice3);
+            Qchoice3.setText(choice3);
+        }
+        public void setChoice4(String choice4) {
+            RadioButton Qchoice4 = (RadioButton) mView.findViewById(R.id.choice4);
+            Qchoice4.setText(choice4);
         }
 
         public void setTrueChoice(String trueChoice) {
@@ -301,11 +313,13 @@ public class dashboard extends AppCompatActivity {
 
         public void setBooleanQuestion(boolean booleanQuestion) {
             Qtrue_falseBtn = booleanQuestion;
-            if (!Strue_falseBtn == false) {
-                submit.setEnabled(booleanQuestion);
-            } else if (Strue_falseBtn == false) {
+            if (booleanQuestion==false)
                 submit.setEnabled(false);
-            }
+            else
+                if (Strue_falseBtn==false){
+                    submit.setEnabled(false);
+                }else
+                    submit.setEnabled(true);
         }
 
     }

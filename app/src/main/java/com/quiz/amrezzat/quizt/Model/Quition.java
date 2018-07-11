@@ -10,6 +10,8 @@ public class Quition {
     private String quition;
     private String choice1;
     private String choice2;
+    private String choice3;
+    private String choice4;
     private String trueChoice;
     private Date date;
     private boolean booleanQuestion;
@@ -18,10 +20,12 @@ public class Quition {
 
     }
 
-    public Quition(String quition, String choice1, String choice2, String trueChoice, Date date, boolean booleanQuestion) {
+    public Quition(String quition, String choice1, String choice2, String choice3, String choice4, String trueChoice, Date date, boolean booleanQuestion) {
         this.quition = quition;
         this.choice1 = choice1;
         this.choice2 = choice2;
+        this.choice3 = choice3;
+        this.choice4 = choice4;
         this.trueChoice = trueChoice;
         this.date = date;
         this.booleanQuestion = booleanQuestion;
@@ -76,5 +80,20 @@ public class Quition {
         this.booleanQuestion = booleanQuestion;
     }
 
+    public String getChoice3() {
+        return choice3;
+    }
+
+    public void setChoice3(String choice3) {
+        this.choice3 = choice3;
+    }
+
+    public String getChoice4() {
+        return choice4;
+    }
+
+    public void setChoice4(String choice4) {
+        this.choice4 = choice4;
+    }
 
 }

@@ -33,7 +33,7 @@ public class Admin extends AppCompatActivity {
     RelativeLayout addPost, addUser;
     Button subUser, subPost;
     EditText userName, Email, password;
-    EditText quition, choice1, choice2, trueChoice;
+    EditText quition, choice1, choice2,choice3,choice4, trueChoice;
     TextView currentUser;
     //firebase
     FirebaseDatabase databaseUser, databaseQuition;
@@ -58,6 +58,8 @@ public class Admin extends AppCompatActivity {
         quition = (EditText) findViewById(R.id.quition);
         choice1 = (EditText) findViewById(R.id.choice1);
         choice2 = (EditText) findViewById(R.id.choice2);
+        choice3 = (EditText) findViewById(R.id.choice3);
+        choice4 = (EditText) findViewById(R.id.choice4);
         trueChoice = (EditText) findViewById(R.id.trueChoice);
         currentUser= (TextView) findViewById(R.id.CurrentUser);
         //init Date
@@ -83,6 +85,7 @@ public class Admin extends AppCompatActivity {
                     case R.id.post:
                         addUser.setVisibility(View.GONE);
                         addPost.setVisibility(View.VISIBLE);
+
                         break;
                     case R.id.addUser:
                         addUser.setVisibility(View.VISIBLE);
@@ -128,7 +131,7 @@ public class Admin extends AppCompatActivity {
     }
 
     public void subPost(View view) {
-        final Quition quitions = new Quition(quition.getText().toString(), choice1.getText().toString(), choice2.getText().toString(), trueChoice.getText().toString(),currentDate,true);
+        final Quition quitions = new Quition(quition.getText().toString(), choice1.getText().toString(), choice2.getText().toString(),choice3.getText().toString(),choice4.getText().toString(), trueChoice.getText().toString(),currentDate,true);
         Quitions.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
