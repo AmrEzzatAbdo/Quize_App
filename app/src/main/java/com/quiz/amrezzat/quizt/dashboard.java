@@ -52,7 +52,7 @@ public class dashboard extends AppCompatActivity {
     static User login;
     static ArrayList<String> GtrueChoice;
     static Date QuestionDate, currentDate;
-    static Boolean Qtrue_falseBtn = true, Strue_falseBtn = false;
+    static Boolean Qtrue_falseBtn = true, Strue_falseBtn = true;
     static String CQuition;
     static Button submit;
     static View viewPos;
@@ -246,12 +246,11 @@ public class dashboard extends AppCompatActivity {
             ref.addValueEventListener(new com.firebase.client.ValueEventListener() {
                 @Override
                 public void onDataChange(com.firebase.client.DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child(quition).exists()) {
-                        Strue_falseBtn = false;
-                        submit.setEnabled(Strue_falseBtn);
+                    if (dataSnapshot.child(CQuition).exists()) {
+                        if (Qtrue_falseBtn == true) {
+                            submit.setEnabled(false);
+                        }
                     }
-                    else
-                        Strue_falseBtn=true;
                 }
 
                 @Override
@@ -259,6 +258,7 @@ public class dashboard extends AppCompatActivity {
 
                 }
             });
+
         }
 
         public void setChoice1(String choice1) {
@@ -270,10 +270,12 @@ public class dashboard extends AppCompatActivity {
             RadioButton Qchoice2 = (RadioButton) mView.findViewById(R.id.choice2);
             Qchoice2.setText(choice2);
         }
+
         public void setChoice3(String choice3) {
             RadioButton Qchoice3 = (RadioButton) mView.findViewById(R.id.choice3);
             Qchoice3.setText(choice3);
         }
+
         public void setChoice4(String choice4) {
             RadioButton Qchoice4 = (RadioButton) mView.findViewById(R.id.choice4);
             Qchoice4.setText(choice4);
@@ -313,13 +315,6 @@ public class dashboard extends AppCompatActivity {
 
         public void setBooleanQuestion(boolean booleanQuestion) {
             Qtrue_falseBtn = booleanQuestion;
-            if (booleanQuestion==false)
-                submit.setEnabled(false);
-            else
-                if (Strue_falseBtn==false){
-                    submit.setEnabled(false);
-                }else
-                    submit.setEnabled(true);
         }
 
     }

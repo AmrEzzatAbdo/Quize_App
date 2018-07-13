@@ -5,33 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.quiz.amrezzat.quizt.Admin">
+
     <RelativeLayout
         android:id="@+id/actionBar"
         android:layout_width="match_parent"
-        android:background="#b76d6d"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="#b76d6d">
+
         <TextView
             android:id="@+id/CurrentUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:text="Current User"/>
+            android:layout_marginLeft="10dp"
+            android:text="Current User" />
+
         <TextView
             android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:onClick="logout"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:text="logout"/>
+            android:onClick="logout"
+            android:text="logout" />
     </RelativeLayout>
+
     <RadioGroup
         android:id="@+id/admChoice"
-        android:layout_below="@id/actionBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/actionBar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
@@ -49,144 +53,156 @@
             android:layout_height="wrap_content"
             android:text="Add new User" />
     </RadioGroup>
+
     <View
         android:id="@+id/lineG"
-        android:layout_below="@id/admChoice"
         android:layout_width="match_parent"
-        android:layout_marginTop="5dp"
+        android:layout_height="1dp"
+        android:layout_below="@id/admChoice"
         android:layout_marginBottom="5dp"
-        android:background="#e4e3e3"
-        android:layout_height="1dp"/>
+        android:layout_marginTop="5dp"
+        android:background="#e4e3e3" />
     <!--for Post-->
     <RelativeLayout
-        android:id="@+id/admPost"
-        android:background="@drawable/rect"
-        android:layout_below="@id/lineG"
+        android:id="@+id/adminContents"
         android:layout_width="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/quition"
-            android:layout_width="wrap_content"
-            android:maxWidth="350dp"
-            android:layout_marginLeft="5dp"
-            android:layout_height="wrap_content"
-            android:hint="Quition 1"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lineG">
 
-        <EditText
-            android:id="@+id/choice1"
-            android:layout_below="@id/quition"
+        <RelativeLayout
+            android:id="@+id/admPost"
             android:layout_width="wrap_content"
-            android:maxWidth="300dp"
-            android:textSize="16dp"
             android:layout_height="wrap_content"
-            android:hint="choice 1"
-            android:layout_marginLeft="10dp"/>
+            android:layout_margin="5dp"
+            android:background="@drawable/rect">
 
-        <EditText
-            android:id="@+id/choice2"
-            android:layout_below="@id/choice1"
-            android:layout_width="wrap_content"
-            android:maxWidth="300dp"
-            android:layout_height="wrap_content"
-            android:hint="choice 2"
-            android:textSize="16dp"
-            android:layout_marginLeft="10dp"/>
-        <EditText
-            android:id="@+id/choice3"
-            android:layout_below="@id/choice2"
-            android:layout_width="wrap_content"
-            android:maxWidth="300dp"
-            android:layout_height="wrap_content"
-            android:hint="choice 2"
-            android:textSize="16dp"
-            android:layout_marginLeft="10dp"/>
-        <EditText
-            android:id="@+id/choice4"
-            android:layout_below="@id/choice3"
-            android:layout_width="wrap_content"
-            android:maxWidth="300dp"
-            android:layout_height="wrap_content"
-            android:hint="choice 2"
-            android:textSize="16dp"
-            android:layout_marginLeft="10dp"/>
+            <EditText
+                android:id="@+id/quition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="Quition 1"
+                android:maxWidth="350dp" />
 
-        <EditText
-            android:id="@+id/trueChoice"
-            android:layout_below="@id/choice4"
-            android:layout_width="wrap_content"
-            android:maxWidth="300dp"
-            android:layout_height="wrap_content"
-            android:hint="choice 1"
-            android:textSize="16dp"
-            android:layout_marginLeft="10dp"/>
-        <Button
-            android:id="@+id/subPost"
-            android:layout_below="@id/trueChoice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="Post"
-            android:layout_alignParentRight="true"
-            android:onClick="subPost"/>
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/choice1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quition"
+                android:layout_marginLeft="10dp"
+                android:hint="choice 1"
+                android:maxWidth="300dp"
+                android:textSize="16dp" />
+
+            <EditText
+                android:id="@+id/choice2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/choice1"
+                android:layout_marginLeft="10dp"
+                android:hint="choice 2"
+                android:maxWidth="300dp"
+                android:textSize="16dp" />
+
+            <EditText
+                android:id="@+id/choice3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/choice2"
+                android:layout_marginLeft="10dp"
+                android:hint="choice 2"
+                android:maxWidth="300dp"
+                android:textSize="16dp" />
+
+            <EditText
+                android:id="@+id/choice4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/choice3"
+                android:layout_marginLeft="10dp"
+                android:hint="choice 2"
+                android:maxWidth="300dp"
+                android:textSize="16dp" />
+
+            <EditText
+                android:id="@+id/trueChoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/choice4"
+                android:layout_marginLeft="10dp"
+                android:hint="choice 1"
+                android:maxWidth="300dp"
+                android:textSize="16dp" />
+
+            <Button
+                android:id="@+id/subPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/trueChoice"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:onClick="subPost"
+                android:text="Post" />
+        </RelativeLayout>
 
 
-    <!--for add user-->
-    <RelativeLayout
-        android:id="@+id/admUser"
-        android:background="@drawable/rect"
-        android:layout_below="@id/lineG"
-        android:layout_width="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_height="290dp">
-        <EditText
-            android:id="@+id/userName"
+        <!--for add user-->
+        <RelativeLayout
+            android:id="@+id/admUser"
             android:layout_width="wrap_content"
-            android:maxWidth="350dp"
-            android:layout_marginLeft="5dp"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
             android:layout_height="wrap_content"
-            android:hint="UserName"/>
+            android:layout_margin="5dp"
+            android:background="@drawable/rect">
 
-        <EditText
-            android:id="@+id/Email"
-            android:layout_below="@id/userName"
-            android:layout_width="wrap_content"
-            android:maxWidth="300dp"
-            android:textSize="16dp"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:layout_marginLeft="10dp"/>
+            <EditText
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
+                android:hint="UserName"
+                android:maxWidth="350dp" />
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_below="@id/Email"
-            android:layout_width="wrap_content"
-            android:maxWidth="300dp"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="password"
-            android:textSize="16dp"
-            android:layout_marginLeft="10dp"/>
-        <Button
-            android:id="@+id/subUser"
-            android:layout_below="@id/password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="submit"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="5dp"
-            android:onClick="subUser"/>
+            <EditText
+                android:id="@+id/Email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userName"
+                android:layout_marginLeft="10dp"
+                android:hint="Email"
+                android:maxWidth="300dp"
+                android:textSize="16dp" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Email"
+                android:layout_marginLeft="10dp"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
+                android:hint="password"
+                android:inputType="textPassword"
+                android:maxWidth="300dp"
+                android:textSize="16dp" />
+
+            <Button
+                android:id="@+id/subUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/password"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:onClick="subUser"
+                android:text="submit" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/admPost"
         android:id="@+id/adminRecycel"
         android:layout_width="match_parent"
-        android:layout_margin="5dp"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/adminContents"
+        android:layout_margin="5dp" />
 </RelativeLayout>
