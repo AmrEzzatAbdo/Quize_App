@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape android:shape="rectangle"
     xmlns:android="http://schemas.android.com/apk/res/android" >
-<stroke android:width="2dp" android:color="@color/colorAccent"/>
+<solid android:width="2dp" android:color="@color/common_google_signin_btn_text_dark_pressed"/>
     </shape>

@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ecf0f1"
     tools:context="com.quiz.amrezzat.quizt.dashboard">
 
     <RelativeLayout
         android:id="@+id/actionBar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#b76d6d">
+        android:layout_height="150dp"
+        android:background="#4177da">
 
         <TextView
             android:id="@+id/CurrentUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="7dp"
             android:text="Current User"
             android:textSize="17dp" />
 
@@ -26,35 +27,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:onClick="logoutU"
             android:text="logout"
+            android:layout_marginTop="7dp"
             android:textSize="17dp" />
 
         <TextView
             android:id="@+id/Urate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"
             android:onClick="uRate"
             android:text="Rates"
             android:textSize="16dp" />
     </RelativeLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/DBposts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/actionBar"
-        android:layout_margin="5dp" />
-
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/myCoordinatorLayout"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/DBposts"></android.support.design.widget.CoordinatorLayout>
+        android:layout_marginTop="80dp" />
 
 </RelativeLayout>

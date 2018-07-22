@@ -33,7 +33,7 @@ public class Admin extends AppCompatActivity {
     RelativeLayout addPost, addUser;
     Button subUser, subPost;
     EditText userName, Email, password;
-    EditText quition, choice1, choice2,choice3,choice4, trueChoice;
+    EditText quition, choice1, choice2, choice3, choice4, trueChoice;
     TextView currentUser;
     //firebase
     FirebaseDatabase databaseUser, databaseQuition;
@@ -61,18 +61,18 @@ public class Admin extends AppCompatActivity {
         choice3 = (EditText) findViewById(R.id.choice3);
         choice4 = (EditText) findViewById(R.id.choice4);
         trueChoice = (EditText) findViewById(R.id.trueChoice);
-        currentUser= (TextView) findViewById(R.id.CurrentUser);
+        currentUser = (TextView) findViewById(R.id.CurrentUser);
         //init Date
         currentDate = Calendar.getInstance().getTime();
         //recycle
         mPositionList = (RecyclerView) findViewById(R.id.adminRecycel);
         mPositionList.setHasFixedSize(true);
         mPositionList.setLayoutManager(new LinearLayoutManager(this));
-        if(!readeFile().isEmpty()){
+        if (!readeFile().isEmpty()) {
             currentUser.setText(readeFile());
         }
         //firebase
-        Quitions= FirebaseDatabase.getInstance().getReference().child("Questions");
+        Quitions = FirebaseDatabase.getInstance().getReference().child("Questions");
         useres = FirebaseDatabase.getInstance().getReference().child("Users");
         useres.keepSynced(true);
         //Gon by default
@@ -97,7 +97,7 @@ public class Admin extends AppCompatActivity {
     }
 
     public void subUser(View view) {
-        final User user = new User(userName.getText().toString(), password.getText().toString(), Email.getText().toString(), "0","test");
+        final User user = new User(userName.getText().toString(), password.getText().toString(), Email.getText().toString(), "0", "test");
         useres.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -116,6 +116,7 @@ public class Admin extends AppCompatActivity {
         });
 
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -131,7 +132,10 @@ public class Admin extends AppCompatActivity {
     }
 
     public void subPost(View view) {
-        final Quition quitions = new Quition(quition.getText().toString(), choice1.getText().toString(), choice2.getText().toString(),choice3.getText().toString(),choice4.getText().toString(), trueChoice.getText().toString(),currentDate,true);
+        //for del old val
+        delOldVal();
+        //add new values
+        final Quition quitions = new Quition(quition.getText().toString(), choice1.getText().toString(), choice2.getText().toString(), choice3.getText().toString(), choice4.getText().toString(), trueChoice.getText().toString(), currentDate, true/*, "n"*/);
         Quitions.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -157,6 +161,7 @@ public class Admin extends AppCompatActivity {
         editor.putString("name", name);
         editor.commit();
     }
+
     public String readeFile() {
         String nameT;
         SharedPreferences sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -164,29 +169,48 @@ public class Admin extends AppCompatActivity {
         nameT = sharedPreferences.getString("name", val);
         return nameT;
     }
+
     public void logout(View view) {
         saveInFile("");
-        startActivity(new Intent(Admin.this,LoginActivity.class));
+        startActivity(new Intent(Admin.this, LoginActivity.class));
         finish();
     }
 
 
-
-
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         View mView;
+
         public UserViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-                }
+        }
+
         public void setUserName(String userName) {
-            TextView User= (TextView) mView.findViewById(R.id.User);
+            TextView User = (TextView) mView.findViewById(R.id.User);
             User.setText(userName);
         }
+
         public void setRate(String rate) {
-            TextView Rate= (TextView) mView.findViewById(R.id.Rate);
+            TextView Rate = (TextView) mView.findViewById(R.id.Rate);
             Rate.setText(rate);
         }
-        }
+    }
+
+    //delete old value
+    public void delOldVal() {
+        Quitions.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    dataSnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }

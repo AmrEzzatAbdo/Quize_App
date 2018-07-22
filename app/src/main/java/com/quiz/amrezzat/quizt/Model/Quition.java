@@ -1,5 +1,7 @@
 package com.quiz.amrezzat.quizt.Model;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.Date;
 
 /**
@@ -15,12 +17,14 @@ public class Quition {
     private String trueChoice;
     private Date date;
     private boolean booleanQuestion;
+   // private String cuser;
+
 
     public Quition() {
 
     }
 
-    public Quition(String quition, String choice1, String choice2, String choice3, String choice4, String trueChoice, Date date, boolean booleanQuestion) {
+    public Quition(String quition, String choice1, String choice2, String choice3, String choice4, String trueChoice, Date date, boolean booleanQuestion/*,String cuser*/) {
         this.quition = quition;
         this.choice1 = choice1;
         this.choice2 = choice2;
@@ -29,6 +33,7 @@ public class Quition {
         this.trueChoice = trueChoice;
         this.date = date;
         this.booleanQuestion = booleanQuestion;
+        //this.cuser=cuser;
     }
 
     public String getQuition() {
@@ -63,7 +68,6 @@ public class Quition {
     public void setTrueChoice(String trueChoice) {
         this.trueChoice = trueChoice;
     }
-
     public Date getDate() {
         return date;
     }
@@ -95,5 +99,13 @@ public class Quition {
     public void setChoice4(String choice4) {
         this.choice4 = choice4;
     }
+/*
+    public String getcuser() {
+        return cuser;
+    }
 
+    public void setcuser(String cuser) {
+        this.cuser = cuser;
+    }
+*/
 }
